@@ -1,0 +1,52 @@
+\documentclass[draft, 12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{lmodern, microtype}
+\usepackage[margin=4cm]{geometry}
+\usepackage[margin=2cm]{caption}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\usepackage[intlimits, sumlimits]{amsmath}
+\usepackage{amsfonts, amssymb}
+\usepackage{mathtools}
+\newcommand \twopi{{{\scriptstyle(2}\mskip-2.0mu\pi{\scriptstyle)}}}
+\newcommand \ee{{\mathrm e}}
+\newcommand \ii{{\mathrm i}}
+\newcommand \full{{\mathrm d}}
+\newcommand \fulld[1]{{\frac \full{\full {#1}}}}
+\newcommand \partiald[1]{{\frac \partial{\partial {#1}}}}
+\newcommand \yesnumber{\addtocounter{equation}{1}\tag \theequation}
+
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize\ttfamily, tabsize=2}
+
+\title{ECMI Modelling Week 2018 \\ Storing Your Random Objects}
+\author{%
+Desiré Nilsson \\ Lund University \\ \texttt{nat14dni@student.lu.se} \and
+Ivana Gengeliacki \\ University of Novi Sad \\ \texttt{tim3ivana@gmail.com} \and
+Jacob Hansen \\ Technical University of Denmark \\ \texttt{jacobjonhansen@gmail.com} \and
+Kirill Kiselev \\ Saint Petersburg Polytechnic University \\ \texttt{kvladimirovich10@gmail.com} \and
+Monika Žunji \\ University of Novi Sad \\ \texttt{zunjimonika@gmail.com} \and
+Sampsa Kiiskinen \\ University of Jyväskylä \\ \texttt{tuplanolla@gmail.com}}
+\date{2018-07-15 -- 2018-07-21}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Words that reference figure \ref{f/stuff} go here.
+
+\begin{figure}
+  \centering
+  $\wp$ % \includegraphics{stuff}
+  \caption{Figure goes here.}
+  \label{f/stuff}
+\end{figure}
+
+\end{document}
