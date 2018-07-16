@@ -1,17 +1,16 @@
-\documentclass[draft, 12pt]{article}
+\documentclass[draft, 12pt, sumlimits, intlimits]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{hyperref}
 \usepackage{lmodern, microtype}
-\usepackage[margin=4cm]{geometry}
+\usepackage[margin=4cm, paper=a4paper]{geometry}
 \usepackage[margin=2cm]{caption}
 \usepackage{booktabs}
 \usepackage{graphicx}
 
-\usepackage[intlimits, sumlimits]{amsmath}
-\usepackage{amsfonts, amssymb}
+\usepackage{amsfonts, amsmath, amssymb}
 \usepackage{mathtools}
 \newcommand \twopi{{{\scriptstyle(2}\mskip-2.0mu\pi{\scriptstyle)}}}
 \newcommand \ee{{\mathrm e}}
@@ -24,14 +23,22 @@
 \usepackage{listings}
 \lstset{basicstyle=\footnotesize\ttfamily, tabsize=2}
 
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{refs.bib}
+
 \title{ECMI Modelling Week 2018 \\ Storing Your Random Objects}
-\author{%
-Desiré Nilsson \\ Lund University \\ \texttt{nat14dni@student.lu.se} \and
-Ivana Gengeliacki \\ University of Novi Sad \\ \texttt{tim3ivana@gmail.com} \and
-Jacob Hansen \\ Technical University of Denmark \\ \texttt{jacobjonhansen@gmail.com} \and
-Kirill Kiselev \\ Saint Petersburg Polytechnic University \\ \texttt{kvladimirovich10@gmail.com} \and
-Monika Žunji \\ University of Novi Sad \\ \texttt{zunjimonika@gmail.com} \and
-Sampsa Kiiskinen \\ University of Jyväskylä \\ \texttt{tuplanolla@gmail.com}}
+\author{Desiré Nilsson \\ Lund University \\
+\texttt{nat14dni@student.lu.se} \and
+Ivana Gengeliacki \\ University of Novi Sad \\
+\texttt{tim3ivana@gmail.com} \and
+Jacob Hansen \\ Technical University of Denmark \\
+\texttt{jacobjonhansen@gmail.com} \and
+Kirill Kiselev \\ Saint Petersburg Polytechnic University \\
+\texttt{kvladimirovich10@gmail.com} \and
+Monika Žunji \\ University of Novi Sad \\
+\texttt{zunjimonika@gmail.com} \and
+Sampsa Kiiskinen \\ University of Jyväskylä \\
+\texttt{tuplanolla@gmail.com}}
 \date{2018-07-15 -- 2018-07-21}
 
 \begin{document}
@@ -40,7 +47,8 @@ Sampsa Kiiskinen \\ University of Jyväskylä \\ \texttt{tuplanolla@gmail.com}}
 
 \section{Introduction}
 
-Words that reference figure \ref{f/stuff} go here.
+Words that reference figure \ref{f/stuff} and
+some literature \cite{conway-1998} go here.
 
 \begin{figure}
   \centering
@@ -48,5 +56,7 @@ Words that reference figure \ref{f/stuff} go here.
   \caption{Figure goes here.}
   \label{f/stuff}
 \end{figure}
+
+\printbibliography
 
 \end{document}
