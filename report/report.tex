@@ -1,17 +1,16 @@
-\documentclass[draft, 12pt]{article}
+\documentclass[draft, 12pt, sumlimits, intlimits]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
 \usepackage{hyperref}
 \usepackage{lmodern, microtype}
-\usepackage[margin=4cm]{geometry}
+\usepackage[margin=4cm, paper=a4paper]{geometry}
 \usepackage[margin=2cm]{caption}
 \usepackage{booktabs}
 \usepackage{graphicx}
 
-\usepackage[intlimits, sumlimits]{amsmath}
-\usepackage{amsfonts, amssymb}
+\usepackage{amsfonts, amsmath, amssymb}
 \usepackage{mathtools}
 \newcommand \twopi{{{\scriptstyle(2}\mskip-2.0mu\pi{\scriptstyle)}}}
 \newcommand \ee{{\mathrm e}}
@@ -24,14 +23,22 @@
 \usepackage{listings}
 \lstset{basicstyle=\footnotesize\ttfamily, tabsize=2}
 
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{refs.bib}
+
 \title{ECMI Modelling Week 2018 \\ Storing Your Random Objects}
-\author{%
-Desiré Nilsson \\ Lund University \\ \texttt{nat14dni@student.lu.se} \and
-Ivana Gengeliacki \\ University of Novi Sad \\ \texttt{tim3ivana@gmail.com} \and
-Jacob Hansen \\ Technical University of Denmark \\ \texttt{jacobjonhansen@gmail.com} \and
-Kirill Kiselev \\ Saint Petersburg Polytechnic University \\ \texttt{kvladimirovich10@gmail.com} \and
-Monika Žunji \\ University of Novi Sad \\ \texttt{zunjimonika@gmail.com} \and
-Sampsa Kiiskinen \\ University of Jyväskylä \\ \texttt{tuplanolla@gmail.com}}
+\author{Desiré Nilsson \\ Lund University \\
+\texttt{nat14dni@student.lu.se} \and
+Ivana Gengeliacki \\ University of Novi Sad \\
+\texttt{tim3ivana@gmail.com} \and
+Jacob Hansen \\ Technical University of Denmark \\
+\texttt{jacobjonhansen@gmail.com} \and
+Kirill Kiselev \\ Saint Petersburg Polytechnic University \\
+\texttt{kvladimirovich10@gmail.com} \and
+Monika Žunji \\ University of Novi Sad \\
+\texttt{zunjimonika@gmail.com} \and
+Sampsa Kiiskinen \\ University of Jyväskylä \\
+\texttt{tuplanolla@gmail.com}}
 \date{2018-07-15 -- 2018-07-21}
 
 \begin{document}
@@ -40,7 +47,8 @@ Sampsa Kiiskinen \\ University of Jyväskylä \\ \texttt{tuplanolla@gmail.com}}
 
 \section{Introduction}
 
-Words that reference figure \ref{f/stuff} go here.
+Words that reference figure \ref{f/stuff} and
+some literature \cite{conway-1998} go here.
 
 \begin{figure}
   \centering
@@ -48,5 +56,111 @@ Words that reference figure \ref{f/stuff} go here.
   \caption{Figure goes here.}
   \label{f/stuff}
 \end{figure}
+
+\section{Notes and Drafts}
+
+We decided to start with a bottom-to-top reconstruction algorithm used
+for granular dynamics \cite{poschel-2005},
+but specialize it for rectangular particles.
+
+\subsection{Bottom-to-Top Reconstruction}
+
+What is the big picture (outline)?
+
+\subsection{Line Intersection}
+
+The intersection of two lines in a plane is easily obtained by solving
+\begin{align*}
+  X_1 + t_1 E_1 & = X_2 + t_2 E_2
+  \yesnumber
+\end{align*}
+where $X$ are the positions (start vertices),
+$E$ are the normalized direction vectors (vertex differences) and
+$t$ are free.
+If the lines are segments,
+they intersect whenever $0 \le t_i \le 1$ for all $i$.
+There also exists a three-dimensional generalization,
+which yields the points,
+where the two lines are the closest.
+
+\subsection{Pivot Selection}
+
+How to select the pivot?
+
+\subsection{Rotation}
+
+The rotation matrix around the origin
+in the plane spanned by the first two dimensions is
+\begin{align*}
+  R (\theta) & =
+  \begin{bmatrix}
+    \cos \theta & -\sin \theta \\
+    \sin \theta & \cos \theta
+  \end{bmatrix}
+  \yesnumber
+\end{align*}
+where $\theta$ is the angle.
+In order to rotate around an arbitrary point,
+we need to extend this to an affine transformation.
+The familiar way is to use homogeneous coordinates.
+We thus define the rotation matrix
+\begin{align*}
+  R' (\theta) & =
+  \begin{bmatrix}
+    \cos \theta & -\sin \theta & 0 \\
+    \sin \theta & \cos \theta & 0 \\
+    0 & 0 & 1
+  \end{bmatrix}
+  \yesnumber
+\end{align*}
+and the translation matrix
+\begin{align*}
+  T (x) & =
+  \begin{bmatrix}
+    1 & 0 & x_1 \\
+    0 & 1 & x_2 \\
+    0 & 0 & 1
+  \end{bmatrix}.
+  \yesnumber
+\end{align*}
+Composing them gives the matrix for a rotation around a point,
+which we shall refer to as pivoting,
+\begin{align*}
+  P (x, \theta) & = T (x) R (\theta) T (-x).
+  \yesnumber
+\end{align*}
+
+\subsection{Order Metrics}
+
+In physics parlance,
+quantitative ways to measure randomness
+in a system are called order metrics.
+There are various kinds \cite{torquato-2002}.
+Alas, most assume the system consists of point particles,
+features bonds (chemical or otherwise) or
+tends to arrange into a known set of crystal structures.
+Our system does not have these properties,
+so we cannot employ them directly.
+
+The best option we could lift from physics is
+the two-body excess entropy \cite{truskett-2000},
+which has the dimensionless form
+\begin{align*}
+  \frac S{k^{\mathrm B}} & = -\frac 1 2 \Big(\frac N V\Big)
+  \int_0^\infty \fulld r \big(g \log g - (g - 1)\big),
+  \label{e/entropy} \yesnumber
+\end{align*}
+where $N$ is the number of particles,
+$V$ is the total volume of the ambient space,
+$g$ is the radial distribution function parametrized
+by the distance $r$ (obtainable
+through weighted kernel density estimation \cite{kiiskinen-2018}) and
+$k^{\mathrm B}$ is the Boltzmann constant.
+However, this does not consider the orientation of the bodies.
+To do that,
+we could use the orientational correlation function \cite{donev-2006},
+but it is not obvious how to incorporate it yet.
+
+\printbibliography
 
 \end{document}

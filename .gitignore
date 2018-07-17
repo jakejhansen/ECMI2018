@@ -1,0 +1,15 @@
+*-blx.bib
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.eps
+*.log
+*.nav
+*.out
+*.pdf
+*.run.xml
+*.snm
+*.tar.gz
+*.toc
