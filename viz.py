@@ -118,6 +118,16 @@ def get_dist(point, line):
         return None
 
 
+import numpy.linalg as la
+
+
+def py_ang(v1, v2):
+    """ Returns the angle in radians between vectors 'v1' and 'v2'    """
+    cosang = np.dot(v1, v2)
+    sinang = la.norm(np.cross(v1, v2))
+    return np.arctan2(sinang, cosang)
+
+
 class Rect(object):
     Line = namedtuple('Line', ['k', 'b', 'min', 'max', 'connected_corners'])
     Point = namedtuple('Point', ['x', 'y'])
@@ -191,6 +201,8 @@ class Rect(object):
 
 def get_box_displacement(moving_lines, lines):
     best_dist = math.inf
+    PoC = None
+    touching_Line = None
     for moving_line in moving_lines:
         p1_moving = Point(x=moving_line.min, y=moving_line.k * moving_line.min + moving_line.b)
         p2_moving = Point(x=moving_line.max, y=moving_line.k * moving_line.max + moving_line.b)
@@ -203,26 +215,36 @@ def get_box_displacement(moving_lines, lines):
             if dist != None:
                 if dist <= best_dist:
                     best_dist = dist
+                    PoC = p1
+                    touching_Line = moving_line
             dist = get_dist(p2, moving_line)
             if dist != None:
                 if dist <= best_dist:
                     best_dist = dist
+                    PoC = p2
+                    touching_Line = moving_line
             dist = get_dist(p1_moving, line)
             if dist != None:
                 if dist <= best_dist:
                     best_dist = dist
+                    PoC = p1_moving
+                    touching_Line = line
             dist = get_dist(p2_moving, line)
             if dist != None:
                 if dist <= best_dist:
                     best_dist = dist
+                    PoC = p2_moving
+                    touching_Line = line
 
-    return best_dist
+    if PoC is not None:
+        PoC = Point(x = PoC.x, y = PoC.y - best_dist)
+    return best_dist, PoC, touching_Line
 
 if __name__ == "__main__":
     Line = namedtuple('Line', ['k', 'b', 'min', 'max', 'connected_corners'])
     Point = namedtuple('Point', ['x', 'y'])
 
-    w_contain = 5
+    w_contain = 10
     h_contain = 5
     b_size = 2
     line_bottom = Line(k = 0, b = 0, min = 0, max = w_contain, connected_corners=[])
@@ -235,28 +257,96 @@ if __name__ == "__main__":
     #boxes = [[[np.random.randint(1,4), 7], 1, 1, np.random.randint(0.0001,180)]]
     boxes = []
 
-    for i in range(2):
+    #Spawn and place N number of boxes
+    N = 1
+    for i in range(N):
         #Spawn a box
-        boxes.append(Rect(np.random.randint(1,4), 7, 1, 1, np.random.randint(0.1,45)))
-
-        #Plot what we have
-        plot_problem(boxes, w_contain, h_contain)
-        plt.show()
+        boxes.append(Rect(np.random.randint(1,7), 6, 1, 1, np.random.randint(1,179)))
 
         #Get the lines of the spawned box
         moving_lines = boxes[-1].get_2_lines()
 
 
-        #Find the shortest distance
-        best_dist = get_box_displacement(moving_lines, lines)
+        #Find the shortest distance and point of contact
+        best_dist, PoC, touching_line = get_box_displacement(moving_lines, lines)
         boxes[0].get_2_lines()
         boxes[-1].cy -= abs(best_dist)
+        boxes[-1].update()
+
+        rotating_corners = []
+        for corner in boxes[-1].corners:
+            if corner[0] != PoC.x:
+                rotating_corners.append(corner)
+
+        smallest_angle = math.inf
+        for corner in rotating_corners:
+            radius = math.sqrt((corner[0] - PoC.x)**2 + (corner[1] - PoC.y)**2)
+
+            from shapely.geometry import LineString
+            from shapely.geometry import Point as Point2
+
+            p = Point2(PoC.x, PoC.y)
+            c = p.buffer(radius).boundary
+
+            for line in lines:
+
+                l = LineString([(line.min, line.min * line.k + line.b), (line.max, line.max * line.k + line.b)])
+                i = c.intersection(l)
+
+
+
+
+                plot_problem(boxes, w_contain, h_contain)
+                plt.plot(corner[0], corner[1], 'ro')
+
+
+                p = i.geoms[0].coords[0]
+                angle = math.degrees(py_ang(np.array([corner[0] - PoC.x, corner[1] - PoC.y]),
+                               np.array([p[0] - PoC.x, p[1] - PoC.y])))
+                print(angle)
+                if angle < smallest_angle:
+                    smallest_angle = angle
+                plt.plot(p[0], p[1], 'bo')
+
+                p = i.geoms[1].coords[0]
+                angle = math.degrees(py_ang(np.array([corner[0] - PoC.x, corner[1] - PoC.y]),
+                               np.array([p[0] - PoC.x, p[1] - PoC.y])))
+                print(angle)
+                if angle < smallest_angle:
+                    smallest_angle = angle
+                plt.plot(p[0], p[1], 'bo')
+
+
+                plt.show()
+                print("smallets_angle: ", smallest_angle)
+                print("ok")
+
+
+        for i, corner in enumerate(boxes[-1].corners):
+            x,y = get_rotated_point(corner[0], corner[1], PoC.x, PoC.y, smallest_angle)
+            plt.plot(x,y, 'yo')
+            boxes[-1].corners[i] = [x,y]
+
+        cx_new, cy_new = get_rotated_point(boxes[-1].cx, boxes[-1].cy, PoC.x, PoC.y, smallest_angle)
+        boxes[-1].cx = cx_new
+        boxes[-1].cy = cy_new
+
         boxes[-1].update()
         for line in boxes[-1].lines:
             lines.append(line)
 
-        plot_problem(boxes, w_contain, h_contain)
-        plt.show()
-        print("")
+    plot_problem(boxes, w_contain, h_contain)
+
+    try:
+        plt.plot(PoC.x, PoC.y, 'ro')
+    except:
+        import IPython
+        IPython.embed()
+
+    for corner in rotating_corners:
+        plt.plot(corner[0], corner[1], 'go')
+
+    plt.show()
+
 
     print("done")
