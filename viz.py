@@ -299,8 +299,10 @@ if __name__ == "__main__":
                 plot_problem(boxes, w_contain, h_contain)
                 plt.plot(corner[0], corner[1], 'ro')
 
-
-                p = i.geoms[0].coords[0]
+                try:
+                    p = i.geoms[0].coords[0]
+                except:
+                    pass
                 angle = math.degrees(py_ang(np.array([corner[0] - PoC.x, corner[1] - PoC.y]),
                                np.array([p[0] - PoC.x, p[1] - PoC.y])))
                 print(angle)
@@ -322,14 +324,18 @@ if __name__ == "__main__":
                 print("ok")
 
 
+        """
         for i, corner in enumerate(boxes[-1].corners):
             x,y = get_rotated_point(corner[0], corner[1], PoC.x, PoC.y, smallest_angle)
             plt.plot(x,y, 'yo')
             boxes[-1].corners[i] = [x,y]
+        """
 
         cx_new, cy_new = get_rotated_point(boxes[-1].cx, boxes[-1].cy, PoC.x, PoC.y, smallest_angle)
         boxes[-1].cx = cx_new
         boxes[-1].cy = cy_new
+
+        boxes[-1].angle += smallest_angle
 
         boxes[-1].update()
         for line in boxes[-1].lines:
