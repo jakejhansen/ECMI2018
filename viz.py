@@ -27,16 +27,16 @@ if __name__ == "__main__":
     boxes = []
 
     #Spawn and place N number of boxes
-    N = 2
+    N = 10
     cxbuffer = [4, 4]
     rotationbuffer = [128, 136]
-    cxbuffer = [2, 3]
-    rotationbuffer = [118, 83]
+    cxbuffer = [3, 3, 4]
+    rotationbuffer = [304, 42, 31]
     for i in range(N):
 
         #Spawn a box
-        #boxes.append(Rect(np.random.randint(2,8), 6, 1, 1, np.random.randint(1,179)))
-        boxes.append(Rect(cxbuffer[i], 6, 1, 1, rotationbuffer[i]))
+        boxes.append(Rect(np.random.randint(2,5), 6, 1, 1, np.random.randint(1,179)))
+        #boxes.append(Rect(cxbuffer[i], 6, 1, 1, rotationbuffer[i]))
 
         print("Box " + str(i) + "cx: " + str(boxes[-1].cx) + " rot: " + str(boxes[-1].angle))
 
@@ -46,54 +46,64 @@ if __name__ == "__main__":
         #plot_problem(boxes, w_contain, h_contain)
         #plt.show()
 
+
         #Find the shortest distance and point of contact
         best_dist, PoC, touching_line = get_box_displacement(moving_lines, lines)
         boxes[-1].cy -= abs(best_dist)
         boxes[-1].update()
 
-        #Figure out tilt: -1 if right, 1 if left
-        if PoC.x < boxes[-1].cx:
-            tilt = -1
-        else:
-            tilt = 1
+        stable = False
+        while not stable:
+            #Figure out tilt: -1 if right, 1 if left
+            if PoC.x < boxes[-1].cx:
+                tilt = -1
+            else:
+                tilt = 1
 
-        # Find the corners that is not at the point of inpact
-        rotating_corners = []
-        for corner in boxes[-1].corners:
-            if corner[0] != PoC.x:
-                rotating_corners.append(corner)
-
-
-
-        smallest_angle = math.inf
-        #Corners of falling box
-        new_PoC = None
-        rotating_box_angle, max_radius, tempPoC = get_smallest_angle_rotating(rotating_corners, tilt, PoC, lines)
-        if rotating_box_angle < smallest_angle:
-            smallest_angle = rotating_box_angle
-            new_PoC = tempPoC
-        #Corners of all other boxes
-        rotating_other_angle, tempPoC = get_smallest_other_rotation(boxes, tilt, PoC, max_radius)
-        if rotating_other_angle < smallest_angle:
-            smallest_angle = rotating_other_angle
-            new_PoC = tempPoC
+            # Find the corners that is not at the point of inpact
+            rotating_corners = []
+            for corner in boxes[-1].corners:
+                if corner[0] != PoC.x:
+                    rotating_corners.append(corner)
 
 
 
-        #Set the angle to be correct
-        if boxes[-1].cx > PoC.x:
-            smallest_angle = -smallest_angle
+            smallest_angle = math.inf
+            #Corners of falling box
+            new_PoC = None
+            rotating_box_angle, max_radius, tempPoC = get_smallest_angle_rotating(rotating_corners, tilt, PoC, lines, boxes)
+            if rotating_box_angle < smallest_angle:
+                smallest_angle = rotating_box_angle
+                new_PoC = tempPoC
+            #Corners of all other boxes
+            rotating_other_angle, tempPoC = get_smallest_other_rotation(boxes, tilt, PoC, max_radius)
+            if rotating_other_angle < smallest_angle:
+                smallest_angle = rotating_other_angle
+                new_PoC = tempPoC
 
-        ### Rotate The box
-        cx_new, cy_new = get_rotated_point(boxes[-1].cx, boxes[-1].cy, PoC.x, PoC.y, smallest_angle)
-        boxes[-1].cx = cx_new
-        boxes[-1].cy = cy_new
+            new_PoC = Point(x = new_PoC[0], y = new_PoC[1])
 
-        boxes[-1].angle += smallest_angle
+            #Set the angle to be correct
+            if boxes[-1].cx > PoC.x:
+                smallest_angle = -smallest_angle
 
-        boxes[-1].update()
-        for line in boxes[-1].lines:
-            lines.append(line)
+            ### Rotate The box
+            cx_new, cy_new = get_rotated_point(boxes[-1].cx, boxes[-1].cy, PoC.x, PoC.y, smallest_angle)
+            boxes[-1].cx = cx_new
+            boxes[-1].cy = cy_new
+
+            boxes[-1].angle += smallest_angle
+
+            boxes[-1].update()
+
+
+            if min(PoC.x, new_PoC.x) <= boxes[-1].cx and boxes[-1].cx <= max(PoC.x, new_PoC.x):
+                stable = True
+                for line in boxes[-1].lines:
+                    lines.append(line)
+            else:
+                PoC = Point(x = new_PoC.x, y = new_PoC.y)
+
         ###
 
 
