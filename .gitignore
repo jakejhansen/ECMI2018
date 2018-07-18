@@ -13,3 +13,4 @@
 *.snm
 *.tar.gz
 *.toc
+__pycache__

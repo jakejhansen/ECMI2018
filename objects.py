@@ -44,9 +44,8 @@ class rect:
         """
         c, s = np.cos(self.eangles), np.sin(self.eangles)
         r = np.array([[c, -s], [s, c]])
-        cs = np.array([-1, 1])
-        return np.array([self.com + np.dot(r, [c0, c1] * self.halfexts)
-            for c0 in cs for c1 in cs])
+        return np.array([self.com + np.dot(r, v * self.halfexts)
+            for v in it.product(*it.repeat([-1, 1], 2))])
 
     def get_aabb(self):
         """
@@ -73,3 +72,11 @@ class rect:
         r = np.array([[c, -s], [s, c]])
         us = np.array([[1, 0], [0, 1], [-1, 0], [0, -1]])
         return np.array([np.dot(r, u) for u in us])
+
+    def get_nsyms(self):
+        """
+        Return the number of symmetries.
+        """
+        # TODO This is slightly questionable for rectangles,
+        # because of how it interacts with the normal vectors.
+        return 4
