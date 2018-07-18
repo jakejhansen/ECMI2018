@@ -1,3 +1,4 @@
+import itertools as it
 import numpy as np
 
 class rect:
@@ -10,14 +11,22 @@ class rect:
 
     >>> r = rect(np.array([69, 42]), np.array([13, 7]), np.deg2rad(90))
     >>> r.get_corners()
-    array([[76.0, 29.0], [62.0, 29.0], [76.0, 55.0], [62.0, 55.0]])
+    np.array([[76.0, 29.0], [62.0, 29.0], [76.0, 55.0], [62.0, 55.0]])
     >>> r.get_aabb().get_corners()
-    array([[62.0, 29.0], [62.0, 55.0], [76.0, 29.0], [76.0, 55.0]])
+    np.array([[62.0, 29.0], [62.0, 55.0], [76.0, 29.0], [76.0, 55.0]])
     """
+
     def __init__(self, com, halfexts, eangles):
+        self.ndim = len(com)
         self.com = com
         self.halfexts = halfexts
         self.eangles = eangles
+
+    def get_ndim(self):
+        """
+        Return the number of dimensions.
+        """
+        return self.ndim
 
     def get_com(self):
         """
@@ -43,9 +52,10 @@ class rect:
         The result may not form a Hamiltonian cycle.
         """
         c, s = np.cos(self.eangles), np.sin(self.eangles)
-        r = np.array([[c, -s], [s, c]])
+        # Not like this.
+        r = np.array([[c, -s], [s, c]]) if self.get_ndim() == 2 else np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]])
         return np.array([self.com + np.dot(r, v * self.halfexts)
-            for v in it.product(*it.repeat([-1, 1], 2))])
+            for v in it.product(*it.repeat([-1, 1], self.ndim))])
 
     def get_aabb(self):
         """
@@ -67,6 +77,8 @@ class rect:
     def get_normals(self):
         """
         Return the outwards-pointing normal vectors in an arbitrary order.
+
+        This only works for squares and rectangles.
         """
         c, s = np.cos(self.eangles), np.sin(self.eangles)
         r = np.array([[c, -s], [s, c]])
@@ -76,7 +88,9 @@ class rect:
     def get_nsyms(self):
         """
         Return the number of symmetries.
+
+        This is slightly questionable for rectangles,
+        because of how it interacts with the normal vectors,
+        so currently this should only be used with squares or cubes.
         """
-        # TODO This is slightly questionable for rectangles,
-        # because of how it interacts with the normal vectors.
         return 4
