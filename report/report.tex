@@ -29,7 +29,7 @@
 \title{ECMI Modelling Week 2018 \\ Storing Your Random Objects}
 \author{Desiré Nilsson \\ Lund University \\
 \texttt{nat14dni@student.lu.se} \and
-Ivana Gengeliacki \\ University of Novi Sad \\
+Ivana Gengeljacki \\ University of Novi Sad \\
 \texttt{tim3ivana@gmail.com} \and
 Jacob Hansen \\ Technical University of Denmark \\
 \texttt{jacobjonhansen@gmail.com} \and
@@ -45,6 +45,9 @@ Sampsa Kiiskinen \\ University of Jyväskylä \\
 
 \maketitle
 
+\section*{Abstract}
+%Do we need one? Do we want one?
+
 \section{Introduction}
 
 Words that reference figure \ref{f/stuff} and
@@ -57,6 +60,17 @@ some literature \cite{conway-1998} go here.
   \label{f/stuff}
 \end{figure}
 
+\section{Problem background}
+The problem with storing random objects is encountered already in childhood as when cleaning one would have to put building blocks of different sizes and shapes in a box for storing. If individually organized little space will be wasted in the container and the lid of the box will most likely easily close. But saving time, most would not organize the blocks but just throw them in, and this poses an interesting problem, will the blocks fit inside the container so that the lid will close properly?
+To study this question one would like to know what the packing density of the container is when the content is put in randomly.
+
+The packing density is likely dependant on a variety of properties. Among other things the shape of the object put in it, the shape of the container and the sizes of the object, both in comparison to each other and to the container. When all objects are completely round is an well studied problem, therefore this report aims to study other shapes.
+To simplify the problem, only objects of the same shape is considered, cubes. Further simplification is reducing from 3D to 2D, leaving the objects to be squares.
+The assumption that the container will not move is made. When packing a box of randomly oriented objects that does not really fit, one would probably shake it to rearrange the configuration. This changes the problem and add complexity, it will therefor not be addressed.
+
+%Discuss difficulties?
+Originating from the solution with balls the biggest difference is that the orientation of the ball when it falls into the container does not affect the result. But for cubes, the orientation in all three dimensions matters, as ignoring it will lead to physically impossible configurations.
+
 \section{Notes and Drafts}
 
 We decided to start with a bottom-to-top reconstruction algorithm used
@@ -64,8 +78,19 @@ for granular dynamics \cite{poschel-2005},
 but specialize it for rectangular particles.
 
 \subsection{Bottom-to-Top Reconstruction}
+First square will land on the bottom. If landing flat on one side, it is in a stable condition and the square is fixed at its position. If at all tilted when landing, only one corner of the square is supported which is not a stable state. It will therefor tilt in the direction of the center of mass, in the unlikely event that the center of mass is exactly above the supported corner, the direction doesn't matter. It will continue to tilt until it is stable which could happens in two ways. Either it falls on its side or it hits the wall of the container and stays tilted, supported by one point on the bottom and one on the container wall. This is also a stable state and it will thereafter stay fixed.
+%Picture of possible outcomes, one square flat on bottom, one tilted against the wall?
 
-What is the big picture (outline)?
+Second square is the same procedure if not in contact with the first. Otherwise many possible outcomes occurs. If the first square is flat, landing with one side flat on the first square could be stable if the center of mass is inside the contact with the first square, if so it is fixed. If not the second square will tilt around the corner of the first square until another point is in contact with the wall or the sides of the squares are connected. It will then continue to tilt, still with the corner of the second square in contact with the side of the first. This will continue until it two points of contact is reached.
+%Picture of tilting process?
+If landing in contact with the flat first square with an angle it will behave as landing on the bottom, it will tilt in the direction of the center of mass. When having a flat contact it will behave as already described above.
+When the first cube is not flat, but instead tilted against the wall, the same procedure as above is performed, tilting against the center of the mass. This might have to be done a few more times but the principle is the same.
+
+Adding more squares is mostly repeating the same rules, with the difference that with more squares the landscape to which the squares are falling changes and more squares are in contact with each other leading to other possible stable states. 
+
+
+
+%What is the big picture (outline)?
 
 \subsection{Line Intersection}
 
@@ -176,6 +201,9 @@ We conjecture that for squares $m = 4$ and for rectangles $m = 2$.
 More is in \cite{saintillan-2007} and \cite{stoyan-1991}.
 Unfortunately combining these is not discussed anywhere.
 This looks very promising \cite{jiao-2011}.
+
+Proper collision prediction seems to be a hard problem,
+as indicated by recent publications \cite{kim-2003}.
 
 \printbibliography
 

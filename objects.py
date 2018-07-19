@@ -76,21 +76,13 @@ class rect:
 
     def get_normals(self):
         """
-        Return the outwards-pointing normal vectors in an arbitrary order.
+        Return the outwards-pointing normal vectors and
+        their numbers of orientational symmetries in an arbitrary order.
 
         This only works for squares and rectangles.
         """
         c, s = np.cos(self.eangles), np.sin(self.eangles)
         r = np.array([[c, -s], [s, c]])
         us = np.array([[1, 0], [0, 1], [-1, 0], [0, -1]])
-        return np.array([np.dot(r, u) for u in us])
-
-    def get_nsyms(self):
-        """
-        Return the number of symmetries.
-
-        This is slightly questionable for rectangles,
-        because of how it interacts with the normal vectors,
-        so currently this should only be used with squares or cubes.
-        """
-        return 4
+        nsyms = 4 if self.halfexts[0] == self.halfexts[1] else 2
+        return [(np.dot(r, u), nsyms) for u in us]
