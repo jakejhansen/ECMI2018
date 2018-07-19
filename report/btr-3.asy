@@ -1,6 +1,7 @@
 include "btr";
 
 size(72mm, 0);
+draw(shift(-10, -10) * scale(20, 28) * unitsquare, invisible);
 
 cont(16, 2);
 fixed("1", 4, (-2, -6), 0);
