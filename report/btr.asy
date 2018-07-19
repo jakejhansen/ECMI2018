@@ -1,4 +1,4 @@
-size(72mm, 0);
+import geometry;
 
 void grid(int n) {
   for (int i = -n; i <= n; ++i)
@@ -6,21 +6,51 @@ void grid(int n) {
       dot((i, j), red);
 }
 
-void cont(real l, real k) {
+void cont(real width, real thick) {
   guide g = (-1, 1) -- (-1, -1) -- (1, -1) -- (1, 1);
-  // draw(scale(l) * scale(1 / 2) * g);
-  guide gin = scale(l) * scale(1 / 2) * g;
-  guide gout = scale(l + k) * scale(1 / 2) * g;
-  draw(gin -- reverse(gout) -- cycle);
+  guide gin = scale(width) * scale(1 / 2) * g;
+  guide gout = scale(width + thick) * scale(1 / 2) * g;
+
+  draw(gin -- reverse(gout) -- cycle, 1 + solid);
 }
 
-void obj(string s, pair x, real l, real a, bool p = false) {
-  guide g = shift(x) * rotate(a) * scale(l) * shift((-1, -1) / 2) * unitsquare;
-  if (p)
-    draw(g, dashed);
-  else {
-    draw(g);
-    dot("$" + s + "$", x);
-    draw(x -- x - (0, 2 * l / 3), Arrow);
-  }
+void fixed(string str, real width, pair src, real asrc) {
+  guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
+  guide gsrc = shift(src) * rotate(asrc) * g;
+
+  draw(gsrc, 1 + solid);
+  dot("$" + str + "$", src);
+}
+
+void resting(string str, real width, pair src, real asrc) {
+  guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
+  guide gsrc = shift(src) * rotate(asrc) * g;
+
+  draw(gsrc);
+  dot("$" + str + "$", src);
+}
+
+void falling(string str, real width, pair src, pair dst, real asrc) {
+  guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
+  guide gsrc = shift(src) * rotate(asrc) * g;
+  guide gdst = shift(dst) * rotate(asrc) * g;
+
+  draw(gsrc, dashed);
+  draw(gdst);
+  draw(src -- dst, Arrow);
+  dot("$" + str + "$", dst);
+}
+
+void rolling(string str, real width, pair src, pair about, real asrc, real adst) {
+  pair dst = rotate(adst - asrc, about) * src;
+
+  guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
+  guide gsrc = shift(src) * rotate(asrc) * g;
+  guide gdst = shift(dst) * rotate(adst) * g;
+
+  draw(gsrc, dashed);
+  draw(gdst);
+  draw(arc(about, src, dst, asrc < adst), Arrow);
+  dot("$" + str + "$", dst);
+  dot(about);
 }

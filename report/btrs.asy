@@ -7,3 +7,5 @@ newpage();
 include "btr-4";
 newpage();
 include "btr-5";
+newpage();
+include "btr-6";
