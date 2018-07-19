@@ -3,7 +3,7 @@ import geometry;
 void grid(int n) {
   for (int i = -n; i <= n; ++i)
     for (int j = -n; j <= n; ++j)
-      dot((i, j), red);
+      dot((i, j));
 }
 
 void cont(real width, real thick) {
@@ -41,8 +41,8 @@ void falling(string str, real width, pair src, pair dst, real asrc) {
   dot("$" + str + "$", dst);
 }
 
-void rolling(string str, real width, pair src, pair about, real asrc, real adst) {
-  pair dst = rotate(adst - asrc, about) * src;
+void rolling(string str, real width, pair src, pair left, real asrc, real adst) {
+  pair dst = rotate(adst - asrc, left) * src;
 
   guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
   guide gsrc = shift(src) * rotate(asrc) * g;
@@ -50,7 +50,20 @@ void rolling(string str, real width, pair src, pair about, real asrc, real adst)
 
   draw(gsrc, dashed);
   draw(gdst);
-  draw(arc(about, src, dst, asrc < adst), Arrow);
+  draw(arc(left, src, dst, asrc < adst), Arrow);
   dot("$" + str + "$", dst);
-  dot(about);
+  dot(left);
+}
+
+void fixing(string str, real width, pair src, pair left, pair right, real asrc) {
+  pair dst = (src.x, src.y - 2 * (src.y - min(left.y, right.y)));
+
+  guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
+  guide gsrc = shift(src) * rotate(asrc) * g;
+
+  draw(gsrc);
+  draw(src -- dst, Arrow);
+  dot("$" + str + "$", src);
+  dot(left);
+  dot(right);
 }
