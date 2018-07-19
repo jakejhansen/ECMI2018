@@ -8,7 +8,6 @@
 *.log
 *.nav
 *.out
-*.pdf
 *.run.xml
 *.snm
 *.tar.gz
