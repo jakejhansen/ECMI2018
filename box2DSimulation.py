@@ -4,6 +4,7 @@ from pygame.locals import *
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from ordermetrics import *
 
 def create_dynamic_box(xpos):
     body=world.CreateDynamicBody(position=(xpos/pygame_box2d_ratio,40), angle=np.random.randint(0,179))
@@ -64,9 +65,9 @@ data = namedtuple("Data", ["size", "density"])
 
 total_result = []
 # set up pygame-box2d constants
-animate = False
-box_sizes = list(range(1,10))
-iterations_z = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+animate = True
+box_sizes = list(range(2,3))
+iterations_z = [1]
 total_result = np.zeros((len(box_sizes), max(iterations_z)+1))
 for vv, box_size in enumerate(box_sizes):
     pillar_height=20.0
@@ -243,6 +244,19 @@ def plotti(total_result):
 
 plotti(total_result)
 
-np.save("box2dsimresult", total_result)
+boxesinside = []
+for box in boxeslist:
+    if isInside(box):
+        boxesinside.append(box)
+
+info = []
+for box in boxesinside:
+    fix = box.fixtures[0].body
+    print(fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle))
+    info.append([fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle)])
+
+print(ocf_np(np.array(info)))
+
+#np.save("box2dsimresult", total_result)
 
 pygame.quit()
