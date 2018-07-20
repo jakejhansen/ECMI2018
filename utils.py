@@ -1,4 +1,6 @@
 import math
+import random
+
 import numpy.linalg as la
 import numpy as np
 from collections import namedtuple
@@ -106,14 +108,36 @@ def get_box_displacement(moving_lines, lines):
         PoC = Point(x = PoC.x, y = PoC.y - best_dist)
     return best_dist, PoC, touching_Line
 
-def best_rand_pos(cx_list):
+def best_rand_pos(cx_list, boxes, box_size, a, b, eps):
+    
     max_delta = 0
+    delta = 0
     x1 = 0
     x2 = 0
+
+    cx_list.sort()
+    #print(cx_list)
+    
     for i in range(1,len(cx_list)):
         delta = cx_list[i] - cx_list[i-1]
-        if (max_delta < delta):
-            max_delta = delta
+        
+        max_delta = max(delta, max_delta)
+        if max_delta == delta:
             x2 = cx_list[i]
             x1 = cx_list[i - 1]
-    return (x2 + x1)/2, max_delta
+
+        #print(delta, max_delta, x1,x2)
+    x_mid = (x2 + x1)/2
+    dev_rand = 6
+    
+    cx_start = random.uniform(x_mid - max_delta / dev_rand, x_mid + max_delta / dev_rand)
+    #cx_start = x_mid
+    #print("random value from to", x_mid - max_delta / dev_rand, x_mid + max_delta / dev_rand, cx_start)
+    
+    if cx_start < a + box_size * math.sqrt(2) / 2:
+        cx_start = a + (box_size * math.sqrt(2) / 2 + eps)
+    elif cx_start > b - box_size * math.sqrt(2) / 2:
+        cx_start = b - (box_size * math.sqrt(2) / 2 + eps)
+
+    print("")
+    return cx_start

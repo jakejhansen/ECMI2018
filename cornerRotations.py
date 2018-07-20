@@ -1,11 +1,9 @@
 from shapely.geometry import LineString
 from shapely.geometry import Point as Point2
-import math
-import numpy as np
 from utils import *
 from plotGuy import *
 
-def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes):
+def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes, im_n):
     smallest_angle = math.inf
     max_radius = math.inf
     new_PoC = None
@@ -19,9 +17,13 @@ def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes):
 
                 p = Point2(PoC.x, PoC.y)
                 c = p.buffer(radius).boundary
+                
+                im_n = get_png(im_n)
 
-                plot_problem(boxes, w_contain= 9, h_contain= 5)
-                #plt.plot(corner[0], corner[1], 'bo')
+                plot_problem(boxes, w_contain=9, h_contain=5)
+                plt.plot(corner[0], corner[1], 'bo')
+                
+                
                 for line in lines:
 
                     if abs(line.min - line.max) < 0.000001:
@@ -40,7 +42,7 @@ def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes):
                             smallest_angle = angle
                             new_PoC = p
 
-                        #plt.plot(p[0], p[1], 'ro')
+                        plt.plot(p[0], p[1], 'ro')
 
                         p = i.geoms[1].coords[0]
                         angle = math.degrees(py_ang(np.array([corner[0] - PoC.x, corner[1] - PoC.y]),
@@ -49,7 +51,7 @@ def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes):
                             smallest_angle = angle
                             new_PoC = p
 
-                        #plt.plot(new_PoC[0], new_PoC[1], 'yo')
+                        plt.plot(new_PoC[0], new_PoC[1], 'yo')
 
 
                     if i.geom_type == "Point":
@@ -59,13 +61,14 @@ def get_smallest_angle_rotating(corners, tilt, PoC, lines, boxes):
                         if angle < smallest_angle:
                             smallest_angle = angle
                             new_PoC = ps
-                        #plt.plot(ps[0], ps[1], 'ro')
+                            
+                        plt.plot(ps[0], ps[1], 'ro')
 
     plt.show()
-    return smallest_angle, max_radius, new_PoC
+    return smallest_angle, max_radius, new_PoC, im_n
 
 
-def get_smallest_other_rotation(boxes, tilt, PoC, max_radius):
+def get_smallest_other_rotation(boxes, tilt, PoC, max_radius, im_n):
     smallest_angle = math.inf
     new_PoC = None
     for box in boxes[:-1]:
@@ -96,7 +99,10 @@ def get_smallest_other_rotation(boxes, tilt, PoC, max_radius):
                                 if angle < smallest_angle:
                                     smallest_angle = angle
                                     new_PoC = p
-                                # plt.plot(p[0], p[1], 'bo')
+
+                                im_n = get_png(im_n)
+                                
+                                plt.plot(p[0], p[1], 'bo')
 
                                 p = i.geoms[1].coords[0]
                                 angle = math.degrees(py_ang(np.array([corner[0] - PoC.x, corner[1] - PoC.y]),
@@ -114,7 +120,5 @@ def get_smallest_other_rotation(boxes, tilt, PoC, max_radius):
                                 if angle < smallest_angle:
                                     smallest_angle = angle
                                     new_PoC = ps
-                                # plot_case(boxes, w_contain, h_contain, points=[PoC, Point(x = ps[0], y = ps[1]), Point(x = corner[0], y = corner[1])])
-                                # plt.show()
 
-    return smallest_angle, new_PoC
+    return smallest_angle, new_PoC, im_n

@@ -108,7 +108,7 @@ for the stacking of perfectly rigid objects \cite{poschel-2005}.
 \item Had to be implemented from scratch.
 \end{itemize}
 \end{block}
-\begin{block}{Discrete Element Method}
+\begin{block}{Discrete Element Methods}
 \begin{itemize}
 \item Use a force-based simulation model
 for the trajectories of elastic objects \cite{poschel-2005}.
@@ -141,7 +141,16 @@ for the trajectories of elastic objects \cite{poschel-2005}.
 \frametitle{Discrete Element Method}
 \centering
 \def \h{8cm}
-Figure goes here. % \includegraphics[height=\h]{dem}
+\only<1>{\includegraphics[height=\h]{dem-0}}%
+\only<2>{\includegraphics[height=\h]{dem-1}}%
+\only<3>{\includegraphics[height=\h]{dem-2}}%
+\only<4>{\includegraphics[height=\h]{dem-3}}%
+\only<5>{\includegraphics[height=\h]{dem-4}}%
+\only<6>{\includegraphics[height=\h]{dem-5}}%
+\only<7>{\includegraphics[height=\h]{dem-6}}%
+\only<8>{\includegraphics[height=\h]{dem-7}}%
+\only<9>{\includegraphics[height=\h]{dem-8}}%
+\only<10>{\includegraphics[height=\h]{dem-9}}
 \end{frame}
 
 \begin{frame}
@@ -153,10 +162,13 @@ We measured the packing density
 \end{align*}
 where $V$ is the volume of the container,
 $N$ is the number of objects and
-$v_i$ is the volume of the object $i$.
+$v_i$ is the volume of object $i$.
 \end{block}
-\begin{block}{Notes}
-Note the treatment of the top of the container.
+\begin{block}{Notable Details}
+\begin{itemize}
+\item The density is always between zero and one.
+\item Objects that protrude through the top of the container are ignored.
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -170,20 +182,22 @@ Note the treatment of the top of the container.
 \begin{frame}
 \frametitle{Randomness}
 \begin{block}{Definition}
-We also attempted to measure randomness.
-Since the objects were not spherical,
-it was difficult to find a suitable order metric.
-We settled with the orientational correlation function
+We attempted to measure randomness with the orientational correlation function
 \begin{align*}
 g & = \frac{\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r) \max_{k, l} \cos 4 \arccos (\vec n_{i, k} \cdot \vec n_{j, l})}
 {\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r)},
 \end{align*}
-where $r$ is the nearest-neighbor range and
-$\vec n_{i, k}$ is the $k$th surface normal of the object $i$.
-The magic number $4$ comes from the size of the rotational symmetry group of the square.
+where $\vec x_i$ is the center of mass of object $i$,
+$r$ is the nearest-neighbor cutoff distance and
+$\vec n_{i, k}$ is the $k$th surface normal of object $i$.
 \end{block}
-\begin{block}{Notes}
-Note the arbitrariness of the definition.
+\begin{block}{Notable Details}
+\begin{itemize}
+\item A distance-dependent pair correlation function would not be meaningful,
+because the objects are not even nearly spherical.
+\item The magic number $4$ comes from the size
+of the rotational symmetry group of the objects.
+\end{itemize}
 \end{block}
 \end{frame}
 
