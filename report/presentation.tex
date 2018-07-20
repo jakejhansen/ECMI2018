@@ -56,17 +56,73 @@ Sampsa Kiiskinen \inst 4}
 \end{frame}
 
 \begin{frame}
+\frametitle{Background}
+\begin{block}{Problem Landscape}
+\begin{itemize}
+\item Packing spheres is well-established \cite{conway-1998},
+but still not trivial \cite{torquato-2000}.
+\item Packing more elaborate shapes has seen relatively little work,
+because it is significantly more complicated.
+\end{itemize}
+\end{block}
+\begin{block}{Challenges}
+\begin{itemize}
+\item Pen-and-paper analysis is limited to small systems.
+\item Simulations provide little insight aside from the result.
+\item Packing density is strongly protocol-dependent \cite{torquato-2002}.
+\item Quantifying randomness
+in a packing of spheres is tricky \cite{truskett-2000} and
+in a packing of other shapes even trickier \cite{stoyan-1991}.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
 \frametitle{Introduction}
-\begin{block}{Filler Content}
-Some literature \cite{conway-1998} goes here.
+\begin{block}{Problem Statement}
+\begin{itemize}
+\item Instead of trying to solve the most general problem,
+we focused on a very specific instance.
+\item What is the packing density and degree of randomness
+in a collection of squares that is dropped into a square container?
+\end{itemize}
+\end{block}
+\begin{block}{Relevance}
+\begin{itemize}
+\item Our problem should be directly applicable
+to the prediction or optimization of industrial packaging processes.
+\item Variations of our problem also appear
+in the microstructural characterization
+of heterogeneous materials \cite{torquato-2002}.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Approaches}
+\begin{block}{Bottom-to-Top Reconstruction}
+\begin{itemize}
+\item Use an event-driven simulation model
+for the stacking of perfectly rigid objects \cite{poschel-2005}.
+\item Fast, but may produce physically impossible results.
+\item Had to be implemented from scratch.
+\end{itemize}
+\end{block}
+\begin{block}{Discrete Element Method}
+\begin{itemize}
+\item Use a force-based simulation model
+for the trajectories of elastic objects \cite{poschel-2005}.
+\item Slow, but accurately represents reality when calibrated correctly.
+\item Many existing implementations were available
+(for example Box2D \cite{box2d} and Bullet \cite{bullet}).
+\end{itemize}
 \end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Bottom-to-Top Reconstruction}
-\begin{block}{Sketch of the Algorithm}
 \centering
-\def \h{7cm}
+\def \h{8cm}
 \only<1>{\includegraphics[height=\h]{btr-0}}%
 \only<2>{\includegraphics[height=\h]{btr-1}}%
 \only<3>{\includegraphics[height=\h]{btr-2}}%
@@ -79,10 +135,66 @@ Some literature \cite{conway-1998} goes here.
 \only<10>{\includegraphics[height=\h]{btr-9}}%
 \only<11>{\includegraphics[height=\h]{btr-10}}%
 \only<12>{\includegraphics[height=\h]{btr-11}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Discrete Element Method}
+\centering
+\def \h{8cm}
+Figure goes here. % \includegraphics[height=\h]{dem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Packing Density}
+\begin{block}{Definition}
+We measured the packing density
+\begin{align*}
+\Delta & = \frac 1 V \sum_{i = 1}^N v_i,
+\end{align*}
+where $V$ is the volume of the container,
+$N$ is the number of objects and
+$v_i$ is the volume of the object $i$.
+\end{block}
+\begin{block}{Notes}
+Note the treatment of the top of the container.
 \end{block}
 \end{frame}
 
 \begin{frame}
+\frametitle{Packing Density}
+\centering
+\def \h{8cm}
+\includegraphics[height=\h]{box2d}
+\end{frame}
+
+\begin{frame}
+\frametitle{Randomness}
+\begin{block}{Definition}
+We also attempted to measure randomness.
+Since the objects were not spherical,
+it was difficult to find a suitable order metric.
+We settled with the orientational correlation function
+\begin{align*}
+g & = \frac{\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r) \max_{k, l} \cos 4 \arccos (\vec n_{i, k} \cdot \vec n_{j, l})}
+{\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r)},
+\end{align*}
+where $r$ is the nearest-neighbor range and
+$\vec n_{i, k}$ is the $k$th surface normal of the object $i$.
+The magic number $4$ comes from the size of the rotational symmetry group of the square.
+\end{block}
+\begin{block}{Notes}
+Note the arbitrariness of the definition.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Randomness}
+\centering
+\def \h{8cm}
+Figure goes here. % \includegraphics[height=\h]{ocf}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
 \frametitle{References}
 \printbibliography
 \end{frame}
