@@ -1,6 +1,7 @@
 from collections import namedtuple
 
 from utils import *
+
 class Rect(object):
     Line = namedtuple('Line', ['k', 'b', 'min', 'max', 'connected_corners', 'miny','maxy'])
     Point = namedtuple('Point', ['x', 'y'])
