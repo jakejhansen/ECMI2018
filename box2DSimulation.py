@@ -7,7 +7,7 @@ import math
 from ordermetrics import *
 
 def create_dynamic_box(xpos):
-    body=world.CreateDynamicBody(position=(xpos/pygame_box2d_ratio,40), angle=np.random.randint(0,179))
+    body=world.CreateDynamicBody(position=(xpos/pygame_box2d_ratio,pygame_screen_y/10), angle=np.random.randint(0,179))
     box=body.CreatePolygonFixture(box=(box_size/2.0,box_size/2.0), density=0.1, friction=1, restitution = 0)
     return body
 
@@ -47,10 +47,12 @@ def drawAABB(box):
 def stop(boxeslist):
     if box_size < 5:
         val = 60
-    elif box_size < 8:
+    elif box_size < 10:
         val = 20
-    else:
+    elif box_size < 15:
         val = 15
+    else:
+        val = 8
     if len(boxeslist) < 2 * val:
         return False
     else:
@@ -65,16 +67,17 @@ data = namedtuple("Data", ["size", "density"])
 
 total_result = []
 # set up pygame-box2d constants
-animate = True
-box_sizes = list(range(3,4))
-iterations_z = [1]
+animate = False
+
+box_sizes = list(range(1,21))
+iterations_z = [6, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
 total_result = np.zeros((len(box_sizes), max(iterations_z)+1))
 for vv, box_size in enumerate(box_sizes):
-    pillar_height=20.0
+    pillar_height=40.0
     pygame_box2d_ratio=10.0
     ground_height=1.0
-    pygame_screen_x=600
-    pygame_screen_y=400
+    pygame_screen_x=400
+    pygame_screen_y=600
     pos_p2 = pygame_screen_x/10
     iterations = iterations_z[vv]
 
@@ -211,7 +214,7 @@ for vv, box_size in enumerate(box_sizes):
 
         density_boxes = inside(boxeslist) * box_size ** 2
         density_container = (pos_p2-0.5) * (pillar_height - ground_height)
-        ratio = density_boxes / density_container
+        ratio = density_boxes / density_container + 0.0001
         print("Iteration {}| Number of boxes: {}, Density: {}".format(iteration, inside(boxeslist), ratio))
 
         result_density.append(ratio)
@@ -240,6 +243,7 @@ def plotti(total_result):
     plt.ylabel('density [%]')
     plt.title('Packing Density as a function of Square Size')
     plt.grid()
+    plt.rc('font', size=22)
     plt.show()
 
 plotti(total_result)
@@ -256,6 +260,9 @@ for box in boxesinside:
     info.append([fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle)])
 
 print(ocf_np(np.array(info)))
+
+import IPython
+IPython.embed()
 
 #np.save("box2dsimresult", total_result)
 
