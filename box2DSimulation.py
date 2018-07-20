@@ -3,6 +3,7 @@ import pygame, sys, math, random
 from pygame.locals import *
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import math
 from ordermetrics import *
 
@@ -82,9 +83,10 @@ def plotti(total_result):
             plt.plot(result[0] + (np.random.rand() - 0.5) * 0.1, den, 'bo')
         means.append(np.mean(result[1:]))
     plt.plot(list(range(int(total_result[0][0]), int(total_result[-1][0]) + 1)), means, 'r')
-    plt.xlabel('Square size')
-    plt.ylabel('density [%]')
+    plt.xlabel('Object Size wrt Container Size')
+    plt.ylabel('Packing Density [%]')
     #plt.title('Packing Density as a function of Square Size')
+    plt.gca().xaxis.set_major_formatter(ticker.FormatStrFormatter('%d/39'))
     plt.grid()
     plt.rc('font', size=15)
     plt.show()
