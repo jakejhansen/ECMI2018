@@ -105,3 +105,15 @@ def get_box_displacement(moving_lines, lines):
     if PoC is not None:
         PoC = Point(x = PoC.x, y = PoC.y - best_dist)
     return best_dist, PoC, touching_Line
+
+def best_rand_pos(cx_list):
+    max_delta = 0
+    x1 = 0
+    x2 = 0
+    for i in range(1,len(cx_list)):
+        delta = cx_list[i] - cx_list[i-1]
+        if (max_delta < delta):
+            max_delta = delta
+            x2 = cx_list[i]
+            x1 = cx_list[i - 1]
+    return (x2 + x1)/2, max_delta

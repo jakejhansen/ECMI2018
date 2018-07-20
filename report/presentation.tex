@@ -57,8 +57,49 @@ Sampsa Kiiskinen \inst 4}
 
 \begin{frame}
 \frametitle{Introduction}
-\begin{block}{Filler Content}
-Some literature \cite{conway-1998} goes here.
+\begin{block}{Background}
+While the problem of packing spheres and
+studying lattices is well-established \cite{conway-1998},
+anything beyond that has seen relatively little work.
+\end{block}
+\begin{block}{Problem Statement}
+What is the packing density and
+degree of disorder in a system of squares
+that has been constructed by dropping?
+% Dropping is a bad word here.
+\end{block}
+\begin{block}{Relevance}
+This problem has some applications
+in the microstructural characterization of materials \cite{torquato-2002} and
+the optimization of industrial processes.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Restrictions}
+\begin{block}{Protocol-Dependence}
+The way the random arrangement is obtained has large impact on the resulting packing density for spheres \cite{torquato-2002},
+so it is reasonable to believe that this is also true of squares.
+Therefore the only option for obtaining realistic results is
+to simulate the actual process.
+\end{block}
+\begin{block}{Friction and Elasticity}
+Friction has a big effect on the outcome,
+because larger friction is more prone to create configurations with higher potential energy.
+Methods based on time integration have problems with inelastic particles,
+because this makes the equations of motion stiff.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Approaches}
+\begin{block}{Bottom-to-Top Reconstruction}
+The first idea was to use a perfectly rigid discrete-time simulation model \cite{poschel-2005}
+for simulating the stacking of objects.
+This is fast and reliable, but may produce impossible configurations if balancing is only considered locally.
+\end{block}
+\begin{block}{Time Integration with Elasticity}
+The classical discrete element approach was attempted at the lowest elasticity that is still feasible for computations.
 \end{block}
 \end{frame}
 
@@ -79,6 +120,36 @@ Some literature \cite{conway-1998} goes here.
 \only<10>{\includegraphics[height=\h]{btr-9}}%
 \only<11>{\includegraphics[height=\h]{btr-10}}%
 \only<12>{\includegraphics[height=\h]{btr-11}}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysis}
+\begin{block}{Packing Density}
+We measured the packing density
+\begin{align*}
+\Delta & = \frac 1 V \sum_{i = 1}^N v_i,
+\end{align*}
+where $V$ is the volume of the container,
+$N$ is the number of objects and
+$v_i$ is the volume of the object $i$.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analysis}
+\begin{block}{Randomness}
+We also attempted to measure randomness.
+Since the objects were not spherical,
+it was difficult to find a suitable order metric.
+We settled with the orientational correlation function
+\begin{align*}
+g & = \frac{\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r) \max_{k, l} \cos 4 \arccos (\vec n_{i, k} \cdot \vec n_{j, l})}
+{\sum_{i = 1}^N \sum_{j = i + 1}^N (|\vec x_j - \vec x_i| < r)},
+\end{align*}
+where $r$ is the nearest-neighbor range and
+$\vec n_{i, k}$ is the $k$th surface normal of the object $i$.
+The magic number $4$ comes from the size of the rotational symmetry group of the square.
 \end{block}
 \end{frame}
 
