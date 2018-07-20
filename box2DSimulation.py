@@ -30,6 +30,21 @@ def inside(boxeslist):
     return sum
 
 
+def get_ofc():
+    boxesinside = []
+    for box in boxeslist:
+        if isInside(box):
+            boxesinside.append(box)
+
+    info = []
+    for box in boxesinside:
+        fix = box.fixtures[0].body
+        #print(fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle))
+        info.append([fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle)])
+
+    return(ocf_np(np.array(info)))
+
+
 def drawAABB(box):
     f = box.fixtures[0]
     AABB = f.GetAABB(0)
@@ -71,13 +86,14 @@ animate = False
 
 box_sizes = list(range(1,21))
 iterations_z = [6, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
+iterations_z = [30]*len(box_sizes)
 total_result = np.zeros((len(box_sizes), max(iterations_z)+1))
 for vv, box_size in enumerate(box_sizes):
     pillar_height=40.0
     pygame_box2d_ratio=10.0
     ground_height=1.0
     pygame_screen_x=400
-    pygame_screen_y=600
+    pygame_screen_y=800
     pos_p2 = pygame_screen_x/10
     iterations = iterations_z[vv]
 
@@ -97,7 +113,7 @@ for vv, box_size in enumerate(box_sizes):
 
         # set up the window
         windowSurface = pygame.display.set_mode((pygame_screen_x, pygame_screen_y))
-        pygame.display.set_caption('Box2D and Pygame demo!')
+        pygame.display.set_caption('Animation')
 
         #setup boxes list
 
@@ -222,7 +238,6 @@ for vv, box_size in enumerate(box_sizes):
         pygame.image.save(windowSurface, "box2dimg/{}_{}.jpeg".format(box_size, iteration))
         #pygame.quit()
 
-
     #total_result.append(data(size = box_size, density=result_density))
     total_result[vv][0] = box_size
     total_result[vv][1:len(result_density)+1] = result_density
@@ -241,25 +256,15 @@ def plotti(total_result):
     plt.plot(list(range(int(total_result[0][0]), int(total_result[-1][0]) + 1)), means, 'r')
     plt.xlabel('Square size')
     plt.ylabel('density [%]')
-    plt.title('Packing Density as a function of Square Size')
+    #plt.title('Packing Density as a function of Square Size')
     plt.grid()
-    plt.rc('font', size=22)
+    plt.rc('font', size=15)
     plt.show()
 
 plotti(total_result)
 
-boxesinside = []
-for box in boxeslist:
-    if isInside(box):
-        boxesinside.append(box)
 
-info = []
-for box in boxesinside:
-    fix = box.fixtures[0].body
-    print(fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle))
-    info.append([fix.position.x, fix.position.y, box_size, box_size, math.radians(fix.angle)])
 
-print(ocf_np(np.array(info)))
 
 import IPython
 IPython.embed()
