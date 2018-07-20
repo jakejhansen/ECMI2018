@@ -120,26 +120,9 @@ for the trajectories of elastic objects \cite{poschel-2005}.
 \end{frame}
 
 \begin{frame}
-\frametitle{Restrictions}
-\begin{block}{Protocol-Dependence}
-The way the random arrangement is obtained has large impact on the resulting packing density for spheres \cite{torquato-2002},
-so it is reasonable to believe that this is also true of squares.
-Therefore the only option for obtaining realistic results is
-to simulate the actual process.
-\end{block}
-\begin{block}{Friction and Elasticity}
-Friction has a big effect on the outcome,
-because larger friction is more prone to create configurations with higher potential energy.
-Methods based on time integration have problems with inelastic particles,
-because this makes the equations of motion stiff.
-\end{block}
-\end{frame}
-
-\begin{frame}
 \frametitle{Bottom-to-Top Reconstruction}
-\begin{block}{Sketch of the Algorithm}
 \centering
-\def \h{7cm}
+\def \h{8cm}
 \only<1>{\includegraphics[height=\h]{btr-0}}%
 \only<2>{\includegraphics[height=\h]{btr-1}}%
 \only<3>{\includegraphics[height=\h]{btr-2}}%
@@ -152,19 +135,18 @@ because this makes the equations of motion stiff.
 \only<10>{\includegraphics[height=\h]{btr-9}}%
 \only<11>{\includegraphics[height=\h]{btr-10}}%
 \only<12>{\includegraphics[height=\h]{btr-11}}
-\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Time Integration}
-\begin{block}{Sketch of the Algorithm}
-Figure goes here.
-\end{block}
+\frametitle{Discrete Element Method}
+\centering
+\def \h{8cm}
+Figure goes here. % \includegraphics[height=\h]{dem}
 \end{frame}
 
 \begin{frame}
-\frametitle{Analysis}
-\begin{block}{Packing Density}
+\frametitle{Packing Density}
+\begin{block}{Definition}
 We measured the packing density
 \begin{align*}
 \Delta & = \frac 1 V \sum_{i = 1}^N v_i,
@@ -173,11 +155,21 @@ where $V$ is the volume of the container,
 $N$ is the number of objects and
 $v_i$ is the volume of the object $i$.
 \end{block}
+\begin{block}{Notes}
+Note the treatment of the top of the container.
+\end{block}
 \end{frame}
 
 \begin{frame}
-\frametitle{Analysis}
-\begin{block}{Randomness}
+\frametitle{Packing Density}
+\centering
+\def \h{8cm}
+\includegraphics[height=\h]{box2d}
+\end{frame}
+
+\begin{frame}
+\frametitle{Randomness}
+\begin{block}{Definition}
 We also attempted to measure randomness.
 Since the objects were not spherical,
 it was difficult to find a suitable order metric.
@@ -190,9 +182,19 @@ where $r$ is the nearest-neighbor range and
 $\vec n_{i, k}$ is the $k$th surface normal of the object $i$.
 The magic number $4$ comes from the size of the rotational symmetry group of the square.
 \end{block}
+\begin{block}{Notes}
+Note the arbitrariness of the definition.
+\end{block}
 \end{frame}
 
 \begin{frame}
+\frametitle{Randomness}
+\centering
+\def \h{8cm}
+Figure goes here. % \includegraphics[height=\h]{ocf}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
 \frametitle{References}
 \printbibliography
 \end{frame}
