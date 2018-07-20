@@ -22,3 +22,15 @@ def ocf(rects):
             x += np.cos(y)
             n += 1
     return x / n
+
+def ocf_np(a):
+    """
+    Return the value of the orientational correlation function
+    for the given collection of rectangular objects represented
+    as a NumPy array with x, y, width, height and angle
+    on the columns of each row.
+    """
+    rs = []
+    for b in a:
+        rs.append(objs.rect(np.array([b[0], b[1]]), np.array([b[2], b[3]]), b[4]))
+    return ocf(rs)

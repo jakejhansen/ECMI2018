@@ -1,4 +1,4 @@
-\documentclass[draft, 12pt, sumlimits, intlimits]{article}
+\documentclass[12pt, sumlimits, intlimits]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -50,14 +50,26 @@ Sampsa Kiiskinen \\ University of Jyväskylä \\
 
 \section{Introduction}
 
-Words that reference figure \ref{f/stuff} and
+Words that reference figure \ref{f/btr} and
 some literature \cite{conway-1998} go here.
 
 \begin{figure}
-  \centering
-  $\wp$ % \includegraphics{stuff}
-  \caption{Figure goes here.}
-  \label{f/stuff}
+\centering
+\def \w{0.25\columnwidth}
+\includegraphics[width=\w]{btr-0}%
+\includegraphics[width=\w]{btr-1}%
+\includegraphics[width=\w]{btr-2}%
+\includegraphics[width=\w]{btr-3} \\
+\includegraphics[width=\w]{btr-4}%
+\includegraphics[width=\w]{btr-5}%
+\includegraphics[width=\w]{btr-6}%
+\includegraphics[width=\w]{btr-7} \\
+\includegraphics[width=\w]{btr-8}%
+\includegraphics[width=\w]{btr-9}%
+\includegraphics[width=\w]{btr-10}%
+\includegraphics[width=\w]{btr-11} \\
+\caption{Sketch of the bottom-to-top reconstruction algorithm.}
+\label{f/btr}
 \end{figure}
 
 \section{Problem background}
