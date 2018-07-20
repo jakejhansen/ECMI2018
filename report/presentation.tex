@@ -56,22 +56,66 @@ Sampsa Kiiskinen \inst 4}
 \end{frame}
 
 \begin{frame}
-\frametitle{Introduction}
-\begin{block}{Background}
-While the problem of packing spheres and
-studying lattices is well-established \cite{conway-1998},
-anything beyond that has seen relatively little work.
+\frametitle{Background}
+\begin{block}{Problem Landscape}
+\begin{itemize}
+\item Packing spheres is well-established \cite{conway-1998},
+but still not trivial \cite{torquato-2000}.
+\item Packing more elaborate shapes has seen relatively little work,
+because it is significantly more complicated.
+\end{itemize}
 \end{block}
+\begin{block}{Challenges}
+\begin{itemize}
+\item Pen-and-paper analysis is limited to small systems.
+\item Simulations provide little insight aside from the result.
+\item Packing density is strongly protocol-dependent \cite{torquato-2002}.
+\item Quantifying randomness
+in a packing of spheres is tricky \cite{truskett-2000} and
+in a packing of other shapes even trickier \cite{stoyan-1991}.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
 \begin{block}{Problem Statement}
-What is the packing density and
-degree of disorder in a system of squares
-that has been constructed by dropping?
-% Dropping is a bad word here.
+\begin{itemize}
+\item Instead of trying to solve the most general problem,
+we focused on a very specific instance.
+\item What is the packing density and degree of randomness
+in a collection of squares that is dropped into a square container?
+\end{itemize}
 \end{block}
 \begin{block}{Relevance}
-This problem has some applications
-in the microstructural characterization of materials \cite{torquato-2002} and
-the optimization of industrial processes.
+\begin{itemize}
+\item Our problem should be directly applicable
+to the prediction or optimization of industrial packaging processes.
+\item Variations of our problem also appear
+in the microstructural characterization
+of heterogeneous materials \cite{torquato-2002}.
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Approaches}
+\begin{block}{Bottom-to-Top Reconstruction}
+\begin{itemize}
+\item Use an event-driven simulation model
+for the stacking of perfectly rigid objects \cite{poschel-2005}.
+\item Fast, but may produce physically impossible results.
+\item Had to be implemented from scratch.
+\end{itemize}
+\end{block}
+\begin{block}{Discrete Element Method}
+\begin{itemize}
+\item Use a force-based simulation model
+for the trajectories of elastic objects \cite{poschel-2005}.
+\item Slow, but accurately represents reality when calibrated correctly.
+\item Many existing implementations were available
+(for example Box2D \cite{box2d} and Bullet \cite{bullet}).
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -92,18 +136,6 @@ because this makes the equations of motion stiff.
 \end{frame}
 
 \begin{frame}
-\frametitle{Approaches}
-\begin{block}{Bottom-to-Top Reconstruction}
-The first idea was to use a perfectly rigid discrete-time simulation model \cite{poschel-2005}
-for simulating the stacking of objects.
-This is fast and reliable, but may produce impossible configurations if balancing is only considered locally.
-\end{block}
-\begin{block}{Time Integration with Elasticity}
-The classical discrete element approach was attempted at the lowest elasticity that is still feasible for computations.
-\end{block}
-\end{frame}
-
-\begin{frame}
 \frametitle{Bottom-to-Top Reconstruction}
 \begin{block}{Sketch of the Algorithm}
 \centering
@@ -120,6 +152,13 @@ The classical discrete element approach was attempted at the lowest elasticity t
 \only<10>{\includegraphics[height=\h]{btr-9}}%
 \only<11>{\includegraphics[height=\h]{btr-10}}%
 \only<12>{\includegraphics[height=\h]{btr-11}}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Time Integration}
+\begin{block}{Sketch of the Algorithm}
+Figure goes here.
 \end{block}
 \end{frame}
 
