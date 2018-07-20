@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib
 from itertools import cycle
+import numpy as np
 
 def plot_problem(boxes, w_contain, h_contain, wall_size=0.3):
     """
@@ -16,7 +17,7 @@ def plot_problem(boxes, w_contain, h_contain, wall_size=0.3):
     """
 
     # Define axies
-    f, (ax1) = plt.subplots(1, 1, figsize=(6, 6))
+    f, (ax1) = plt.subplots(1, 1, figsize=(4, 4))
     f.subplots_adjust(hspace=0, wspace=0)
 
     # Plot the contianer
@@ -60,6 +61,7 @@ def abline(slope, intercept):
     axes = plt.gca()
     x_vals = np.array(axes.get_xlim())
     y_vals = intercept + slope * x_vals
+    plt.axis('equal')
     plt.plot(x_vals, y_vals, '--')
 
 def plot_case(boxes, w_contain, h_contain, lines = None, points = None):
