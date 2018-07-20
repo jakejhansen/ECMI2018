@@ -66,7 +66,7 @@ data = namedtuple("Data", ["size", "density"])
 total_result = []
 # set up pygame-box2d constants
 animate = True
-box_sizes = list(range(2,3))
+box_sizes = list(range(3,4))
 iterations_z = [1]
 total_result = np.zeros((len(box_sizes), max(iterations_z)+1))
 for vv, box_size in enumerate(box_sizes):
