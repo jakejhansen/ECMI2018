@@ -42,7 +42,7 @@ void falling(string str, real width, pair src, pair dst, real asrc) {
 }
 
 void rolling(string str, real width, pair src, pair left, real asrc, real adst) {
-  pair dst = rotate(adst - asrc, left) * src;
+  pair dst = shift(left) * rotate(adst - asrc) * shift(-left) * src;
 
   guide g = scale(width) * shift((-1, -1) / 2) * unitsquare;
   guide gsrc = shift(src) * rotate(asrc) * g;
