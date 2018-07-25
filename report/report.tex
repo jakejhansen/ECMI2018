@@ -5,10 +5,12 @@
 \usepackage[english]{babel}
 \usepackage{hyperref}
 \usepackage{lmodern, microtype}
-\usepackage[margin=4cm, paper=a4paper]{geometry}
+\usepackage[top=3.5cm, bottom=2cm, right=2cm, left=3.5cm,
+paper=a4paper]{geometry}
 \usepackage[margin=2cm]{caption}
 \usepackage{booktabs}
 \usepackage{graphicx}
+\usepackage{etoolbox}
 
 \usepackage{amsfonts, amsmath, amssymb}
 \usepackage{mathtools}
@@ -23,35 +25,145 @@
 \usepackage{listings}
 \lstset{basicstyle=\footnotesize\ttfamily, tabsize=2}
 
-\usepackage[backend=bibtex]{biblatex}
+\usepackage[backend=bibtex, style=authoryear]{biblatex}
 \addbibresource{refs.bib}
 
-\title{ECMI Modelling Week 2018 \\ Storing Your Random Objects}
-\author{Desiré Nilsson \\ Lund University \\
-\texttt{nat14dni@student.lu.se} \and
-Ivana Gengeljacki \\ University of Novi Sad \\
-\texttt{tim3ivana@gmail.com} \and
-Jacob Hansen \\ Technical University of Denmark \\
-\texttt{jacobjonhansen@gmail.com} \and
-Kirill Kiselev \\ Saint Petersburg Polytechnic University \\
-\texttt{kvladimirovich10@gmail.com} \and
-Monika Žunji \\ University of Novi Sad \\
-\texttt{zunjimonika@gmail.com} \and
-Sampsa Kiiskinen \\ University of Jyväskylä \\
-\texttt{tuplanolla@gmail.com}}
-\date{2018-07-15 -- 2018-07-21}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.5ex}
+\pagenumbering{arabic}
+\thispagestyle{empty}
 
 \begin{document}
 
-\maketitle
+\includegraphics[width=8cm]{ecmi-logo.png}
 
-\section*{Abstract}
-%Do we need one? Do we want one?
+ECMI Modeling Week 2018 \\*
+University of Novi Sad, Faculty of Technical Sciences
+
+\begin{center}
+\vspace{2.0cm}
+{\Large{\textbf{\MakeUppercase{Storing your random objects}}}}
+
+\vspace{\stretch{0.01}}
+
+Thomas Götz (University of Koblenz and Landau)
+
+\vspace{\stretch{0.01}}
+
+\begin{tabular}{rl}
+Desiré Nilsson & (Lund University) \\
+Ivana Gengeljacki & (University of Novi Sad) \\
+Jacob Hansen & (Technical University of Denmark) \\
+Kirill Kiselev & (Saint Petersburg Polytechnic University) \\
+Monika Žunji & (University of Novi Sad) \\
+Sampsa Kiiskinen & (University of Jyväskylä)
+\end{tabular}
+
+\vspace{\stretch{0.5}}
+
+2018-07-15 -- 2018-07-21
+
+\end{center}
+
+\vspace{\stretch{0.15}}
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
 
 \section{Introduction}
 
+The actual research report is opened with an introduction. The purpose of the
+introduction is to introduce the topic and awaken the reader's interest. The
+introduction briefly describes the background, material extent and aims of the
+work. The introduction presents the research methodology applied. It also
+describes the key points and organisation of the document (which section
+includes what). It does not, however, include detailed descriptions of the
+theory, methods or results.
+
+\section{Report content}
+
+After the introduction there follows the actual content of the report follows.
+Depending on the project, the document may need to include some theoretical
+section with presentation of methods used in the practical implementation. Then
+the implementation details (techniques, methods, software, etc.) should be
+given, followed by the work results.
+
+The language of the report must be grammatically correct and the expression
+coherent, accurate and concise. The topic must be presented to the reader
+unequivocally, intelligibly and consistently. The style must be academic and
+the technical terminology established. In particular, the use of foreign words
+should be avoided. They should be replaced with paraphrases or expressions in
+the language of the text.
+
+The entire document should follow the typical scientific writing rules, that
+is:
+\begin{itemize}
+\item Every figure and table needs to be properly numbered and captioned.
+\item Every figure and table that appears in the document has to be explicitly
+referred to (by its number) in the text, for the first time always before the
+actual figure/table is presented.
+\item The recommended figure file format is *.eps and *.pdf or *.png (when
+neither *.eps nor *.png is not possible).
+\item The font size in the figures (labels, legend, etc.) should be comparable
+to the main text font.
+\item Equations should be well formatted/aligned and numbered and, where
+necessary, explicitly referred to by their numbers.
+\item The text should be aesthetically typed in, with spaces between words and
+punctuation marks formatted with respect to the international typing
+standards.
+\item References should have full bibliographic data required respectively to
+each publication type.
+\item Every bibliography item listed under references should be cited
+explicitly in the text.
+\item The style of all bibliography items should be unified.
+\end{itemize}
+
+In order for the observations to be of use to others, the stages of the
+research work must be presented in complete and the results of the observations
+in their original form in e.g. tables. Long sequences of equations and
+programming code are appended with headings. It is not necessary to show the
+derivation of the equations quoted, although the author must make sure the
+equations are presented correctly. However, the derivation of new expressions
+and equations introduced in the text must be shown, at least in outline. The
+author must also explain under which conditions the calculations, formulae and
+equations are applicable.
+
+\section{Discussion and conclusions}
+
+Depending on the nature and scope of the study, the report ends either with the
+chapter ``Conclusions'', or two separate chapters, e.g. ``Discussion'' and
+``Conclusions''. In the discussion, the author relates all of the material he
+or she wishes in reply to the research questions posed. Repetition with respect
+to the text in the report's main content should be avoided unless it is
+necessary. However, the discussion must be drawn up in such a way that a
+professional in the field can repeat the research work e.g. to check the
+equations, expressions, measurements, calculations or results and conclusions.
+
+The conclusions analyse the observations and results drawn from the research,
+as well as examine and reflect on e.g. the compatibility of the theory and
+measurements, the reasons for possible differences, and summarise the
+conclusions drawn from the results. The need for further research and possible
+practical applications may also be argued here.
+
+\section{Group work dynamics}
+
+The student group should write an assessment of the group work dynamics
+(including both the Modeling Week time itself and the time/workload afterwards,
+spent on writing the report itself). In particular, you should at least answer
+to the following questions:
+\begin{itemize}
+\item How did you plan the work?
+\item How was the work distributed between the partners?
+\item What was beneficial or challenging about the group work?
+\end{itemize}
+
+\section{Crap copied directly from the previous draft}
+
 Words that reference figure \ref{f/btr} and
-some literature \cite{conway-1998} go here.
+some literature (\cite{conway-1998}) go here.
 
 \begin{figure}
 \centering
@@ -91,7 +203,7 @@ some literature \cite{conway-1998} go here.
 \label{f/dem}
 \end{figure}
 
-\section{Problem background}
+\subsection{Problem background}
 The problem with storing random objects is encountered already in childhood as when cleaning one would have to put building blocks of different sizes and shapes in a box for storing. If individually organized little space will be wasted in the container and the lid of the box will most likely easily close. But saving time, most would not organize the blocks but just throw them in, and this poses an interesting problem, will the blocks fit inside the container so that the lid will close properly?
 To study this question one would like to know what the packing density of the container is when the content is put in randomly.
 
@@ -102,13 +214,13 @@ The assumption that the container will not move is made. When packing a box of r
 %Discuss difficulties?
 Originating from the solution with balls the biggest difference is that the orientation of the ball when it falls into the container does not affect the result. But for cubes, the orientation in all three dimensions matters, as ignoring it will lead to physically impossible configurations.
 
-\section{Notes and Drafts}
+\subsection{Notes and Drafts}
 
 We decided to start with a bottom-to-top reconstruction algorithm used
-for granular dynamics \cite{poschel-2005},
+for granular dynamics (\cite{poschel-2005}),
 but specialize it for rectangular particles.
 
-\subsection{Bottom-to-Top Reconstruction}
+\subsubsection{Bottom-to-Top Reconstruction}
 First square will land on the bottom. If landing flat on one side, it is in a stable condition and the square is fixed at its position. If at all tilted when landing, only one corner of the square is supported which is not a stable state. It will therefor tilt in the direction of the center of mass, in the unlikely event that the center of mass is exactly above the supported corner, the direction doesn't matter. It will continue to tilt until it is stable which could happens in two ways. Either it falls on its side or it hits the wall of the container and stays tilted, supported by one point on the bottom and one on the container wall. This is also a stable state and it will thereafter stay fixed.
 %Picture of possible outcomes, one square flat on bottom, one tilted against the wall?
 
@@ -123,7 +235,7 @@ Adding more squares is mostly repeating the same rules, with the difference that
 
 %What is the big picture (outline)?
 
-\subsection{Line Intersection}
+\subsubsection{Line Intersection}
 
 The intersection of two lines in a plane is easily obtained by solving
 \begin{align*}
@@ -139,11 +251,11 @@ There also exists a three-dimensional generalization,
 which yields the points,
 where the two lines are the closest.
 
-\subsection{Pivot Selection}
+\subsubsection{Pivot Selection}
 
 How to select the pivot?
 
-\subsection{Rotation}
+\subsubsection{Rotation}
 
 The rotation matrix around the origin
 in the plane spanned by the first two dimensions is
@@ -186,12 +298,12 @@ which we shall refer to as pivoting,
   \yesnumber
 \end{align*}
 
-\subsection{Order Metrics}
+\subsubsection{Order Metrics}
 
 In physics parlance,
 quantitative ways to measure randomness
 in a system are called order metrics.
-There are various kinds \cite{torquato-2002}.
+There are various kinds (\cite{torquato-2002}).
 Alas, most assume the system consists of point particles,
 features bonds (chemical or otherwise) or
 tends to arrange into a known set of crystal structures.
@@ -199,7 +311,7 @@ Our system does not have these properties,
 so we cannot employ them directly.
 
 The best option we could lift from physics is
-the two-body excess entropy \cite{truskett-2000},
+the two-body excess entropy (\cite{truskett-2000}),
 which has the dimensionless form
 \begin{align*}
   \frac S{k^{\mathrm B}} & = -\frac 1 2 \Big(\frac N V\Big)
@@ -210,11 +322,11 @@ where $N$ is the number of particles,
 $V$ is the total volume of the ambient space,
 $g$ is the radial distribution function parametrized
 by the distance $r$ (obtainable
-through weighted kernel density estimation \cite{kiiskinen-2018}) and
+through weighted kernel density estimation (\cite{kiiskinen-2018})) and
 $k^{\mathrm B}$ is the Boltzmann constant.
 However, this does not consider the orientation of the bodies.
 To do that,
-we could use the orientational correlation function \cite{donev-2006},
+we could use the orientational correlation function (\cite{donev-2006}),
 but it is not obvious how to incorporate it yet.
 
 While the (unnormalized) radial correlation function says
@@ -227,16 +339,31 @@ the orientational correlation function
   g_m (r) & = \langle\cos m (\theta - \theta')\rangle_{\theta'},
   \label{e/angular} \yesnumber
 \end{align*}
-where $m$ is the degree of the symmetries (as in \cite{donev-2006}).
+where $m$ is the degree of the symmetries as in (\cite{donev-2006}).
 We conjecture that for squares $m = 4$ and for rectangles $m = 2$.
-More is in \cite{saintillan-2007} and \cite{stoyan-1991}.
+More is in (\cite{saintillan-2007}) and (\cite{stoyan-1991}).
 Unfortunately combining these is not discussed anywhere.
-This looks very promising \cite{jiao-2011}.
+This looks very promising (\cite{jiao-2011}).
 
-\subsection{Why 2D Instead of 3D}
+\subsubsection{Why 2D Instead of 3D}
 
 Proper collision prediction seems to be a hard problem,
-as indicated by ``recent'' publications \cite{kim-2003}.
+as indicated by ``recent'' publications (\cite{kim-2003}).
+
+\section{Instructor's assessment}
+
+Every instructor is asked to add a brief (1--2 paragraph) summary of how the
+group has performed through the week, especially with respect to the problem's
+initial goals and the actual achievements. Here is also the place to report
+possible total or part-time absences of the students during the group work
+hours --- these can be also reported by the fellow group mates.
+
+\clearpage
+
+\thispagestyle{empty}
+\addcontentsline{toc}{section}{References}
+
+Possible references should be included in Harvard (author and year) style.
 
 \printbibliography
 
