@@ -50,10 +50,8 @@ Sampsa Kiiskinen \\ University of Jyväskylä \\
 
 \section{Introduction}
 
-Packing spheres is well-established \cite{conway-1998},
-but by no means trivial \cite{torquato-2000}.
-
-Words that reference figure \ref{f/btr} go here.
+Words that reference figure \ref{f/btr} and
+some literature \cite{conway-1998} go here.
 
 \begin{figure}
 \centering
@@ -69,9 +67,28 @@ Words that reference figure \ref{f/btr} go here.
 \includegraphics[width=\w]{btr-8}%
 \includegraphics[width=\w]{btr-9}%
 \includegraphics[width=\w]{btr-10}%
-\includegraphics[width=\w]{btr-11} \\
+\includegraphics[width=\w]{btr-11}
 \caption{Sketch of the bottom-to-top reconstruction algorithm.}
 \label{f/btr}
+\end{figure}
+
+\begin{figure}
+\centering
+\def \w{0.25\columnwidth}
+\includegraphics[width=\w]{dem-0}%
+\includegraphics[width=\w]{dem-1}%
+\includegraphics[width=\w]{dem-2}%
+\includegraphics[width=\w]{dem-3} \\
+\includegraphics[width=\w]{dem-4}%
+\includegraphics[width=\w]{dem-5}%
+\includegraphics[width=\w]{dem-6}%
+\includegraphics[width=\w]{dem-7} \\
+\includegraphics[width=\w]{dem-8}%
+\includegraphics[width=\w]{dem-9}%
+\includegraphics[width=\w]{dem-10}%
+\includegraphics[width=\w]{dem-11}
+\caption{Sketch of the force-based discrete element method.}
+\label{f/dem}
 \end{figure}
 
 \section{Problem background}
@@ -100,7 +117,7 @@ Second square is the same procedure if not in contact with the first. Otherwise 
 If landing in contact with the flat first square with an angle it will behave as landing on the bottom, it will tilt in the direction of the center of mass. When having a flat contact it will behave as already described above.
 When the first cube is not flat, but instead tilted against the wall, the same procedure as above is performed, tilting against the center of the mass. This might have to be done a few more times but the principle is the same.
 
-Adding more squares is mostly repeating the same rules, with the difference that with more squares the landscape to which the squares are falling changes and more squares are in contact with each other leading to other possible stable states. 
+Adding more squares is mostly repeating the same rules, with the difference that with more squares the landscape to which the squares are falling changes and more squares are in contact with each other leading to other possible stable states.
 
 
 
@@ -219,7 +236,7 @@ This looks very promising \cite{jiao-2011}.
 \subsection{Why 2D Instead of 3D}
 
 Proper collision prediction seems to be a hard problem,
-as indicated by recent publications \cite{kim-2003}.
+as indicated by ``recent'' publications \cite{kim-2003}.
 
 \printbibliography
 
