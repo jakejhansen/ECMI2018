@@ -1,0 +1,6 @@
+{
+  "project": "pictures",
+  "container": "Test-Container",
+  "command": "nvidia-smi",
+  "lastJobId": "jspioz886h9wqx"
+}

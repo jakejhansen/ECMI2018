@@ -123,7 +123,7 @@ GREEN = (0, 255, 0)
 
 ## PROGRAM
 ## set up pygame-box2d constants
-animate = False
+animate = True
 pillar_height=40.0
 pygame_box2d_ratio=10.0
 ground_height=1.0
@@ -133,7 +133,7 @@ pos_p2 = pygame_screen_x/10
 ##
 
 #Test Variables
-box_sizes = list(range(5,21))
+box_sizes = list(range(18,21))
 iterations_z = [6, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190]
 iterations_z = [30]*len(box_sizes)
 total_result = np.zeros((len(box_sizes), max(iterations_z)+1))
